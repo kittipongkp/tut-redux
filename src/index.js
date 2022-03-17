@@ -1,17 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import './index.css'
 import App from './App'
+import thunk from 'redux-thunk'
 
-import { cartReducer } from './reducers/cartReducer';
-import { devToolsEnhancer } from 'redux-devtools-extension'
+import { rootReducer } from './reducers/rootReducer'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 import reportWebVitals from './reportWebVitals'
 
-const store = createStore(cartReducer, devToolsEnhancer())
+const middleware = [thunk]
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(...middleware)))
 
 ReactDOM.render(
   <Provider store={store}>
